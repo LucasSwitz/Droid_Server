@@ -3,6 +3,11 @@ import abc
 
 class Command:
 
+    def __init__(self,parallel=False):
+        self._parallel = parallel
+
+    def is_parallel(self):
+        return self._parallel
     @abc.abstractmethod
     def init(self):
         """Called once at the start of the Command"""

@@ -1,4 +1,5 @@
 import queue
+from threading import Thread
 
 
 class CommandQueue:
@@ -10,4 +11,10 @@ class CommandQueue:
 
     def run(self):
         while self._q.not_empty():
-            self._q.get().run()
+            command = self._q.get()
+            if command.is_parallel():
+                thread = Thread(command.run())
+                thread.daemon = True
+                thread.start()
+            else:
+                command.run()

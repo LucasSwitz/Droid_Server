@@ -14,5 +14,8 @@ class CLInterpreter:
             "execute": self.run_execute_command,
         }
 
-        func = switch.get(base)
-        func(args)
+        func = switch.get(base, None)
+        if func is not None:
+            func(args)
+        else:
+            print("Invalid CLI command")
