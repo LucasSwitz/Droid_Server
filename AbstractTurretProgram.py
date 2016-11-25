@@ -4,7 +4,7 @@ from command.CommandQueue import CommandQueue
 
 class AbstractTurretProgram:
     def __init__(self):
-        super(AbstractTurret, self).__init__()
+        super(AbstractTurretProgram, self).__init__()
         self._commandQueue = CommandQueue()
 
     @abc.abstractmethod

@@ -16,7 +16,9 @@ class PanToPositionCommand(Command):
         pass
 
     def from_args(args):
+        if len(args) < 1:
+            return None
         return PanToPositionCommand(int(args[0]))
 
     def finished(self):
-        pass
+        return True

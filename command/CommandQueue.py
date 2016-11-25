@@ -18,3 +18,6 @@ class CommandQueue:
                 thread.start()
             else:
                 command.run()
+
+    def stop(self):
+        self._q.empty()

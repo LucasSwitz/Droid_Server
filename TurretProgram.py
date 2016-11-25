@@ -4,7 +4,8 @@ from AbstractTurretProgram import AbstractTurretProgram
 class TurretProgram(AbstractTurretProgram):
 
     def on_stop(self):
-        pass
+        self._commandQueue.stop()
+
 
     def on_start(self):
-        pass
+        self._commandQueue.run()

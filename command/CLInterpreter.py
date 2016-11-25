@@ -7,7 +7,9 @@ class CLInterpreter:
     def run_execute_command(args):
         factory = CommandFactory()
         command = factory.parse_command(args)
-        command.run()
+
+        if command is not None:
+            command.run()
 
     def run_cli_command(self, base, args):
         switch = {

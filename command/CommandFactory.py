@@ -7,7 +7,12 @@ class CommandFactory:
         switch = {
             "pan_to_position": PanToPositionCommand.from_args(args)
         }
-        return switch.get(command_name).run()
+        command = switch.get(command_name)
+
+        if command is None:
+            print("Invalid command: " + command_name)
+
+        return command
 
     def parse_command(self, args):
         command_name = args[0]
