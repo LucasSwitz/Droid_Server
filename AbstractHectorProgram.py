@@ -9,7 +9,7 @@ class AbstractTurretProgram:
 
     @abc.abstractmethod
     def on_stop(self):
-        """What to do when the turret is stopped"""
+        """What to do when the hector is stopped"""
         return
 
     @abc.abstractmethod

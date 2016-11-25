@@ -1,4 +1,4 @@
-from AbstractTurretProgram import AbstractTurretProgram
+from AbstractHectorProgram import AbstractTurretProgram
 
 
 class TurretProgram(AbstractTurretProgram):

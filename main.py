@@ -1,5 +1,5 @@
-from turret.TurretServer import TurretServer
+from hector.HectorServer import HectorServer
 
-server = TurretServer(4444)
+server = HectorServer(4444)
 
 server.start()

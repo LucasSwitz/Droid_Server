@@ -1,3 +1,4 @@
+from communication.MessageDispatch import MessageDispatch
 
 
 class System:
@@ -11,3 +12,9 @@ class System:
 
     def name(self):
         return self._name
+
+    def __str__(self):
+        return self.name()
+
+    def dispatch_message(self, message):
+        MessageDispatch.instance.dispatch(str(self) + ": " + message)

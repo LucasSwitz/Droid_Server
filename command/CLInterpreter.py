@@ -1,5 +1,5 @@
 from command.CommandFactory import CommandFactory
-
+from communication.MessageDispatch import MessageDispatch
 
 class CLInterpreter:
 
@@ -20,4 +20,4 @@ class CLInterpreter:
         if func is not None:
             func(args)
         else:
-            print("Invalid CLI command")
+            MessageDispatch.instance.dispatch("Invalid CLI command")

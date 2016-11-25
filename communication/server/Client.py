@@ -20,9 +20,13 @@ class ClientThread(threading.Thread):
     def kill(self):
         self._running = False
 
-    def add_recieve_listener(self,listener):
+    def add_recieve_listener(self, listener):
         self._listener = listener
 
     def update_listener(self, data):
         if self._listener is not None:
             self._listener.on_data_recieve(data.decode())
+
+    # send out bytes
+    def send(self, out):
+        self._clientSocket.send(out)

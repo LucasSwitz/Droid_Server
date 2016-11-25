@@ -5,7 +5,6 @@ from communication.server.ClientListener import ClientListener
 
 
 class Server(ClientListener):
-
     @abc.abstractmethod
     def on_data_recieve(self, data):
         """Do something with client data"""
@@ -20,7 +19,7 @@ class Server(ClientListener):
         self.setup()
 
     def setup(self):
-        print("Setting up server or port: "+str(self._port))
+        print("Setting up server or port: " + str(self._port))
         self._socket.bind(('localhost', self._port))
         self._socket.listen(Server.MAX_NUM_OF_CONNECTIONS)
 
@@ -28,13 +27,15 @@ class Server(ClientListener):
         print("Waiting for clients to connect...")
         self._running = True
         while self._running:
-            (clientSocket, address) = self._socket.accept()
+            (client_socket, address) = self._socket.accept()
 
-            print("Client accepted from: "+str(address))
+            print("Client accepted from: " + str(address))
+            self.add_client(client_socket)
 
-            client = ClientThread(clientSocket)
-            client.add_recieve_listener(self)
-            client.start()
+    def add_client(self, client_socket):
+        client = ClientThread(client_socket)
+        client.add_recieve_listener(self)
+        client.start()
 
     def stop(self):
         self._running = False

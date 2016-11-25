@@ -1,24 +1,25 @@
 from motorcontrollers.MotorController import MotorController
+import RPI.GPIO as GPIO
 
 
 class RPiSetepperMotorController(MotorController):
     sequence = \
-        [[1, 0, 0, 1],
-         [1, 0, 0, 0],
-         [1, 1, 0, 0],
-         [0, 1, 0, 0],
+        [[1, 1, 0, 0],
          [0, 1, 1, 0],
-         [0, 0, 1, 0],
          [0, 0, 1, 1],
-         [0, 0, 0, 1]]
+         [1, 0, 0, 1]]
 
-    MAX_STEPS = 200
-
-    def __init__(self, port, pins):
+    def __init__(self, port, pins, steps=200):
         super(RPiSetepperMotorController, self).__init__(port)
         self._pins = pins
         self._current_position = 0
         self._goal_position = 0
+        self.setup_pins()
+        self.MAX_STEPS = steps
+
+    def setup_pins(self):
+        for pin in self._pins:
+            GPIO.setup(pin, GPIO.OUT)
 
     def set(self, position):
         self.step_to_angle(position)
@@ -36,7 +37,7 @@ class RPiSetepperMotorController(MotorController):
         while self._current_position != position:
             for pin in range(0, 4):
                 xpin = self._pins[pin]
-                if self.sequence[self._current_position % 8][pin] != 0:
+                if self.sequence[self._current_position % len(self.sequence)][pin] != 0:
                     GPIO.output(xpin, True)
                 else:
                     GPIO.output(xpin, False)
