@@ -1,16 +1,17 @@
 from motorcontrollers.MotorController import MotorController
-import RPI.GPIO as GPIO
+import RPi.GPIO as GPIO
+import time
 
 
 class RPiSetepperMotorController(MotorController):
     sequence = \
-        [[1, 1, 0, 0],
+        [[1, 0, 1, 0],
          [0, 1, 1, 0],
-         [0, 0, 1, 1],
+         [0, 1, 0, 1],
          [1, 0, 0, 1]]
 
     def __init__(self, port, pins, steps=200):
-        super(RPiSetepperMotorController, self).__init__(port)
+        MotorController.__init__(self, port)
         self._pins = pins
         self._current_position = 0
         self._goal_position = 0
@@ -20,32 +21,53 @@ class RPiSetepperMotorController(MotorController):
     def setup_pins(self):
         for pin in self._pins:
             GPIO.setup(pin, GPIO.OUT)
+            GPIO.output(pin, False)
 
     def set(self, position):
         self.step_to_angle(position)
 
+    def disable(self):
+        for pin in self._pins:
+            GPIO.output(pin, False)
+
     def step_to_angle(self, angle):
-        self.step_to_position(self.convert_angle_to_step(angle))
+        self.take_steps(self.convert_angle_to_step(angle))
 
-    def step_to_position(self, position):
+    def step_to_position(self,steps):
+        self.take_steps(steps)
 
-        if position > self.MAX_STEPS:
-            position = self.MAX_STEPS
+    def take_steps(self, steps):
 
-        self._goal_position = position
+        self._goal_position = steps
 
-        while self._current_position != position:
-            for pin in range(0, 4):
-                xpin = self._pins[pin]
-                if self.sequence[self._current_position % len(self.sequence)][pin] != 0:
-                    GPIO.output(xpin, True)
-                else:
-                    GPIO.output(xpin, False)
+        if steps > 0:
+            direction = 1
+        else:
+            direction = 0
 
-            self._current_position += 1
+        to_step = abs(steps)
 
-            if self._current_position >= self.MAX_STEPS:
-                self._current_position = self.MAX_STEPS
+        while to_step > 0:
+            if direction == 0:
+                if self._current_position == 0:
+                    self._current_position = self.MAX_STEPS
+                self._current_position -= 1
+            elif direction == 1:
+                self._current_position += 1
+                if self._current_position == self.MAX_STEPS:
+                    self._current_position = 0
+
+            to_step -= 1
+            self.__step()
+
+    def __step(self):
+        for xpin in range(0, 4):
+            pin = self._pins[xpin]
+            time.sleep(.001)
+            if self.sequence[self._current_position % len(self.sequence)][xpin] != 0:
+                GPIO.output(pin, True)
+            else:
+                GPIO.output(pin, False)
 
     def on_target(self):
         return self._goal_position == self._current_position
@@ -58,8 +80,8 @@ class RPiSetepperMotorController(MotorController):
 
     @staticmethod
     def convert_angle_to_step(angle):
-        return angle * (5 / 9)
+        return round(float(angle) * (5.0 / 9.0))
 
     @staticmethod
     def convert_step_to_angle(step):
-        return step * (9 / 5)
+        return round(float(step) * (9.0 / 5.0))

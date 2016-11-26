@@ -18,9 +18,6 @@ class CommandFactory:
         return command
 
     def parse_command(self, args):
-        if args is None or len(args) < 1:
-            MessageDispatch.instance.dispatch("Invalid use of 'execute' ")
-            return
         command_name = args[0]
         command_args = args[1:]
         return self.get_command(command_name, command_args)
