@@ -1,9 +1,10 @@
-from motorcontrollers.MotorController import MotorController
-import RPi.GPIO as GPIO
+from motorcontrollers.RPiMotorController import RPiMotorController
 import time
 
 
-class RPiSetepperMotorController(MotorController):
+# Using the LM298N driver
+
+class LM298NSetepperMotorController(RPiMotorController):
     sequence = \
         [[1, 0, 1, 0],
          [0, 1, 1, 0],
@@ -11,7 +12,7 @@ class RPiSetepperMotorController(MotorController):
          [1, 0, 0, 1]]
 
     def __init__(self, port, pins, steps=200):
-        MotorController.__init__(self, port)
+        RPiMotorController.__init__(self, port)
         self._pins = pins
         self._current_position = 0
         self._goal_position = 0
@@ -33,7 +34,7 @@ class RPiSetepperMotorController(MotorController):
     def step_to_angle(self, angle):
         self.take_steps(self.convert_angle_to_step(angle))
 
-    def step_to_position(self,steps):
+    def step_to_position(self, steps):
         self.take_steps(steps)
 
     def take_steps(self, steps):

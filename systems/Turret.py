@@ -1,9 +1,7 @@
 from systems.System import System
-from functools import partial
 import threading
 
-from motorcontrollers.RPiStepperMotorController import RPiSetepperMotorController
-
+from motorcontrollers.H4988StepperMotorController import H4988StepperMotorController
 
 class Turret(System):
     def get_cli_functions(self, args):
@@ -22,8 +20,8 @@ class Turret(System):
 
     def __init__(self, pan_pins, tilt_pins):
         System.__init__(self, "Turret")
-        self._pan_controller = RPiSetepperMotorController(0, pan_pins)
-        self._tilt_controller = RPiSetepperMotorController(0, tilt_pins)
+        self._pan_controller = H4988StepperMotorController(pan_pins)
+        self._tilt_controller = H4988StepperMotorController(tilt_pins)
 
     def disable(self):
         System.dispatch_message(self, "Disabled.")
@@ -32,11 +30,11 @@ class Turret(System):
 
     def set_pan(self, steps):
         System.dispatch_message(self, "Panning to " + str(steps) + " steps...")
-        self._pan_controller.take_steps(steps)
+        self._pan_controller.set(steps)
 
     def set_tilt(self, steps):
         System.dispatch_message(self, "Tilting to " + str(steps) + " steps...")
-        self._tilt_controller.take_steps(steps)
+        self._tilt_controller.set(steps)
 
     def set_pan_tilt_parallel(self, pan_angle, tilt_angle):
 
