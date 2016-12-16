@@ -1,5 +1,4 @@
 from RPiMotorController import RPiMotorController
-import RPi.GPIO as GPIO
 
 
 class PWMMotorController(RPiMotorController):
@@ -16,15 +15,15 @@ class PWMMotorController(RPiMotorController):
 
     def apply_forward(self, throttle):
         print("Forward!")
-        GPIO.output(self.get_pins()[0], True)
-        GPIO.output(self.get_pins()[1], False)
+        self.set_pin(self.get_pins()[0], True)
+        self.set_pin(self.get_pins()[1], False)
 
     def apply_backwards(self, throttle):
         print("Backward!")
-        GPIO.output(self.get_pins()[1], True)
-        GPIO.output(self.get_pins()[0], False)
+        self.set_pin(self.get_pins()[1], True)
+        self.set_pin(self.get_pins()[0], False)
 
     def off(self):
         print ("Off!")
-        GPIO.output(self.get_pins()[1], False)
-        GPIO.output(self.get_pins()[0], False)
+        self.set_pin(self.get_pins()[1], False)
+        self.set_pin(self.get_pins()[0], False)

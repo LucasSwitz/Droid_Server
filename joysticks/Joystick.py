@@ -11,3 +11,6 @@ class Joystick:
 
     def get_button(self, button):
         return self._buttons[button]
+
+    def get_buttons(self):
+        return self._buttons.values()

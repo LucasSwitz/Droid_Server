@@ -16,20 +16,14 @@ class LM298NSetepperMotorController(RPiMotorController):
         self._pins = pins
         self._current_position = 0
         self._goal_position = 0
-        self.setup_pins()
         self.MAX_STEPS = steps
-
-    def setup_pins(self):
-        for pin in self._pins:
-            GPIO.setup(pin, GPIO.OUT)
-            GPIO.output(pin, False)
 
     def set(self, value):
         self.step_to_angle(value)
 
     def disable(self):
         for pin in self._pins:
-            GPIO.output(pin, False)
+            self.set_pint(pin, False)
 
     def step_to_angle(self, angle):
         self.take_steps(self.convert_angle_to_step(angle))
@@ -66,9 +60,9 @@ class LM298NSetepperMotorController(RPiMotorController):
             pin = self._pins[xpin]
             time.sleep(.001)
             if self.sequence[self._current_position % len(self.sequence)][xpin] != 0:
-                GPIO.output(pin, True)
+                self.set_pint(pin, True)
             else:
-                GPIO.output(pin, False)
+                self.set_pint(pin, False)
 
     def on_target(self):
         return self._goal_position == self._current_position

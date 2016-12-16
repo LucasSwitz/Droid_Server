@@ -3,9 +3,12 @@ from motorcontrollers.PWMMotorController import PWMMotorController
 from functools import partial
 from hector.HectorOI import HectorOI
 from threading import Thread
-import time
+from command.commands.DriveByJoystickCommand import DriveByJoystickCommand
+
 
 class DriveTrain(System):
+    def get_default_command(self, args):
+        return DriveByJoystickCommand()
 
     def __init__(self, left_pins, right_pins):
         System.__init__(self, "DriveTrain")
@@ -28,7 +31,7 @@ class DriveTrain(System):
         self._right_motor_controller.set(right_throttle)
 
     def run(self):
-            self.set(HectorOI.drive_stick.get_leftY(), HectorOI.drive_stick.get_rightY())
+        self.set(HectorOI.drive_stick.get_left_Y(), HectorOI.drive_stick.get_right_Y())
 
     def stop(self):
         System.dispatch_message(self, "Stopped!")

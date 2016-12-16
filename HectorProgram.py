@@ -1,11 +1,23 @@
-from AbstractHectorProgram import AbstractTurretProgram
+from AbstractHectorProgram import AbstractHectorProgram
+from hector.Hector import Hector
+from command.CommandQueue import CommandQueue
 
 
-class TurretProgram(AbstractTurretProgram):
+class HectorProgram(AbstractHectorProgram):
+    def teleop(self):
+        CommandQueue.get_instance().run()
 
-    def on_stop(self):
-        self._commandQueue.stop()
+    def on_auto_start(self):
+        pass
 
+    def auto(self):
+        pass
 
-    def on_start(self):
-        self._commandQueue.run()
+    def disabled(self):
+        pass
+
+    def on_disabled_start(self):
+        Hector.stop()
+
+    def on_teleop_start(self):
+        CommandQueue.get_instance().clear()

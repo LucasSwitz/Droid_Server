@@ -3,8 +3,9 @@ from systems.DriveTrain import DriveTrain
 from HectorMap import HectorMap
 
 
-
 class Hector:
+
+    instance = None
     # Turret Config
     turret_tilt_motor_pins = [HectorMap.TILT_DIRECTION_PIN, HectorMap.TILT_STEP_PIN]
     turret_pan_motor_pins = [HectorMap.PAN_DIRECTION_PIN, HectorMap.PAN_STEP_PIN]
@@ -20,3 +21,21 @@ class Hector:
         drivetrain.name(): drivetrain
     }
 
+    def stop(self):
+        for system in self.systems:
+            system.disable()
+
+    @staticmethod
+    def get_instance():
+        if Hector.instance is None:
+            Hector.instance = Hector()
+        return Hector.instance
+
+    def is_alive(self):
+        return self._alive
+
+    def kill(self):
+        self._alive = False
+
+    def __init__(self):
+        self._alive = True

@@ -1,3 +1,4 @@
+import abc
 
 
 class Button:
@@ -20,5 +21,9 @@ class Button:
     def get_value(self):
         return self._value
 
-    def update(self,value):
+    def update(self, value):
         self._value = value
+
+    @abc.abstractmethod
+    def get(self):
+        """Return true when command should be launched"""

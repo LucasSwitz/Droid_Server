@@ -6,6 +6,9 @@ from motorcontrollers.H4988StepperMotorController import H4988StepperMotorContro
 
 
 class Turret(System):
+    def stop(self, args):
+        self.disable()
+
     def get_cli_functions(self, args):
         functions = {
             "disable": self.disable

@@ -2,7 +2,7 @@ from command.CLInterpreter import CLInterpreter
 from enum import Enum
 from binascii import hexlify
 from hector.HectorOI import HectorOI
-from hector.Hector import Hector
+
 
 class InputMode(Enum):
     CLI = 0,
@@ -31,9 +31,8 @@ class InputChannel:
         cli.run_cli_command(base_command, args)
 
     def parse_teleop(self, data):
-        Hector.drivetrain.run()
-        new_data = [0]*len(data)
-        for i in range(0,len(data)):
+        new_data = [0] * len(data)
+        for i in range(0, len(data)):
             hex_value = hexlify(data[i])
             new_data[i] = int(hex_value, 16)
         self._joystick_base.update_joystick(new_data[0], new_data[1:len(new_data)])

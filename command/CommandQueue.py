@@ -1,10 +1,12 @@
-import queue
+from Queue import Queue
 from threading import Thread
 
 
 class CommandQueue:
+    instance = None
+
     def __init__(self):
-        self._q = queue.Queue()
+        self._q = Queue()
 
     def add_command(self, command):
         self._q.put(command)
@@ -13,11 +15,21 @@ class CommandQueue:
         while self._q.not_empty():
             command = self._q.get()
             if command.is_parallel():
-                thread = Thread(command.run())
-                thread.daemon = True
-                thread.start()
+                self._run_parallel(command)
             else:
                 command.run()
 
-    def stop(self):
+    def clear(self):
         self._q.empty()
+
+    def _run_parallel(self,command):
+        thread = Thread(command.run)
+        thread.daemon = True
+        thread.start()
+
+
+    @staticmethod
+    def get_instance():
+        if CommandQueue.instance is None:
+            CommandQueue.instance = CommandQueue()
+        return CommandQueue.instance

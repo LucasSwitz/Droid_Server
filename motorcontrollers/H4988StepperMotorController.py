@@ -1,6 +1,5 @@
 from RPiMotorController import RPiMotorController
 from enum import Enum
-import RPi.GPIO as GPIO
 import time
 
 
@@ -24,6 +23,10 @@ class H4988StepperMotorController(RPiMotorController):
             self.step_forward()
             i += 1
 
+    def disable(self):
+        self._set_step_pin(False)
+        self._set_step_pin(False)
+
     def step_forward(self):
         if self._current_direction != self.Direction.FORWARD:
             self.set_direction(self.Direction.FORWARD)
@@ -45,18 +48,21 @@ class H4988StepperMotorController(RPiMotorController):
     def set_direction_pin(self, state):
         if state:
             self._current_direction = self.Direction.FORWARD
-            GPIO.output(self._pins[0], GPIO.HIGH)
+            self.set(self._pins[0], True)
         else:
             self._current_direction = self.Direction.BACKWARD
-            GPIO.output(self._pins[0], GPIO.LOW)
-        #should be 50 microseconds
+            self.set_pin(self._pins[0], False)
+        # should be 50 microseconds
         time.sleep(.0001)
 
     def step(self):
-        GPIO.output(self._pins[1], GPIO.HIGH)
-        #should be 100 microseconds
+        self.set_pin(self._pins[1], True)
+        # should be 100 microseconds
         time.sleep(.0001)
-        GPIO.output(self._pins[1], GPIO.LOW)
-        #should be 100 microseconds
+        self.set_pin(self._pins[1], False)
+        # should be 100 microseconds
         time.sleep(.0001)
         self._current_position += 1
+
+    def _set_step_pin(self, value):
+        self.set_pin(self._pins[1], value)
