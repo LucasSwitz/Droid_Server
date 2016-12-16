@@ -1,7 +1,9 @@
 from systems.System import System
+from functools import partial
 import threading
 
 from motorcontrollers.H4988StepperMotorController import H4988StepperMotorController
+
 
 class Turret(System):
     def get_cli_functions(self, args):

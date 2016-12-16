@@ -25,7 +25,7 @@ class ClientThread(threading.Thread):
 
     def update_listener(self, data):
         if self._listener is not None:
-            self._listener.on_data_recieve(data.decode())
+            self._listener.on_data_recieve(data)
 
     # send out bytes
     def send(self, out):

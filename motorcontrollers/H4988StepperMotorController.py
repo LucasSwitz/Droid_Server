@@ -17,10 +17,10 @@ class H4988StepperMotorController(RPiMotorController):
         self._goal_position = 0
         self.set_direction(self.Direction.FORWARD)
 
-    def set(self, steps):
-        self._goal_position += steps
+    def set(self, value):
+        self._goal_position += value
         i = 0
-        while i < steps:
+        while i < value:
             self.step_forward()
             i += 1
 

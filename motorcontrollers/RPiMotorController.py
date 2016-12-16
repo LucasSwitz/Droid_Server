@@ -12,11 +12,12 @@ class RPiMotorController:
     def _setup_pins(self):
         for pin in self._pins:
             GPIO.setup(pin, GPIO.OUT)
+            GPIO.output(pin, False)
 
     def get_pins(self):
         return self._pins
 
     @abc.abstractmethod
-    def set(self, position):
+    def set(self, value):
         """Set Position of actuator"""
         return

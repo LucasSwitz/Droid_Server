@@ -24,8 +24,8 @@ class LM298NSetepperMotorController(RPiMotorController):
             GPIO.setup(pin, GPIO.OUT)
             GPIO.output(pin, False)
 
-    def set(self, position):
-        self.step_to_angle(position)
+    def set(self, value):
+        self.step_to_angle(value)
 
     def disable(self):
         for pin in self._pins:
