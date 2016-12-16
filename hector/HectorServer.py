@@ -10,6 +10,7 @@ class HectorServer(Server):
         Server.__init__(self, port)
         MessageDispatch()
         self.inputChannel = InputChannel(input_mode)
+        #
 
     def on_data_recieve(self, data):
         if data == "close":
