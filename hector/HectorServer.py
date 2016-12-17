@@ -10,13 +10,12 @@ class HectorServer(Server):
         Server.__init__(self, port)
         MessageDispatch()
         self.inputChannel = InputChannel(input_mode)
-        #
 
     def on_data_recieve(self, data):
         if data == "close":
             MessageDispatch.instance.dispatch("Server Closing....")
             Server.stop(self)
-            Hector.get_instance().stop()
+            Hector.get_instance().disable_all_systems()
         self.inputChannel.parseData(data)
 
     def add_client(self, client_socket):

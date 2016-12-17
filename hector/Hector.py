@@ -1,6 +1,5 @@
-from systems.Turret import Turret
+from hector.HectorMap import HectorMap
 from systems.DriveTrain import DriveTrain
-from HectorMap import HectorMap
 
 
 class Hector:
@@ -21,9 +20,13 @@ class Hector:
         drivetrain.name(): drivetrain
     }
 
-    def stop(self):
+    def disable_all_systems(self):
         for system in self.systems:
             system.disable()
+
+    def enable_all_systems(self):
+        for system in self.systems:
+            system.enable()
 
     @staticmethod
     def get_instance():

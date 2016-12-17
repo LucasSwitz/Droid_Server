@@ -16,25 +16,18 @@ class DriveTrain(System):
         self._right_motor_controller = PWMMotorController(right_pins)
         self._stick = HectorOI.drive_stick
 
-    def enable(self):
-        thread = Thread(target=self.run())
-        thread.daemon = True
-        thread.start()
+    def _enable(self):
+        pass
 
     def set(self, left_throttle, right_throttle):
         if abs(right_throttle) < .5:
             right_throttle = 0
         if abs(left_throttle) < .5:
             left_throttle = 0
-        System.dispatch_message(self, "Driving...")
         self._left_motor_controller.set(left_throttle)
         self._right_motor_controller.set(right_throttle)
 
-    def run(self):
-        self.set(HectorOI.drive_stick.get_left_Y(), HectorOI.drive_stick.get_right_Y())
-
     def stop(self):
-        System.dispatch_message(self, "Stopped!")
         self._left_motor_controller.set(0)
         self._right_motor_controller.set(0)
 

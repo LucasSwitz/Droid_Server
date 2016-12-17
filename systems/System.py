@@ -19,6 +19,14 @@ class System:
 
         function()
 
+    def enable(self):
+        CommandQueue.get_instance().add_command(self._default_command)
+        self._enable()
+
+    @abc.abstractmethod
+    def _enable(self):
+        pass
+
     @abc.abstractmethod
     def get_cli_functions(self, args):
         """Return CLI functions"""

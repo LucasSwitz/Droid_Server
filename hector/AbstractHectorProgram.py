@@ -12,28 +12,42 @@ class HectorMode(Enum):
 
 class AbstractHectorProgram:
     def __init__(self):
-        self._commandQueue = CommandQueue()
         self._last_mode = None
         self.change_mode(HectorMode.DISABLED)
 
-    @abc.abstractmethod
+    def on_teleop_start(self):
+        CommandQueue.get_instance().clear()
+        Hector.get_instance().enable_all_systems()
+        self._on_teleop_start()
+
     def on_auto_start(self):
+        CommandQueue.get_instance().clear()
+        Hector.get_instance().enable_all_systems()
+        self._on_auto_start()
+
+    def on_disabled_start(self):
+        CommandQueue.get_instance().clear()
+        Hector.get_instance().disable_all_systems()
+        self._on_disabled_start()
+
+    @abc.abstractmethod
+    def _on_auto_start(self):
         """called once at the start of auto"""
         return
 
     @abc.abstractmethod
-    def on_teleop_start(self):
+    def _on_teleop_start(self):
         """called once at the start of teleop"""
         return
 
     @abc.abstractmethod
-    def on_disabled_start(self):
+    def _on_disabled_start(self):
         """called once at the start of disabled"""
         return
 
     @abc.abstractmethod
     def auto(self):
-        """main auot loop"""
+        """main auto loop"""
         return
 
     @abc.abstractmethod
@@ -66,7 +80,7 @@ class AbstractHectorProgram:
         self._mode = mode
 
     def start_command_queue(self):
-        self._commandQueue.run()
+        CommandQueue.get_instance().run()
 
     def stop_command_queue(self):
-        self._commandQueue.stop()
+        CommandQueue.get_instance().clear()

@@ -4,11 +4,9 @@ from command.CommandQueue import CommandQueue
 
 
 class HectorProgram(AbstractHectorProgram):
+
     def teleop(self):
         CommandQueue.get_instance().run()
-
-    def on_auto_start(self):
-        pass
 
     def auto(self):
         pass
@@ -16,8 +14,12 @@ class HectorProgram(AbstractHectorProgram):
     def disabled(self):
         pass
 
-    def on_disabled_start(self):
-        Hector.stop()
+    def _on_auto_start(self):
+        pass
 
-    def on_teleop_start(self):
-        CommandQueue.get_instance().clear()
+    def _on_disabled_start(self):
+        pass
+
+    def _on_teleop_start(self):
+        pass
+
