@@ -5,6 +5,8 @@ import time
 
 
 class JoystickMonitor:
+    instance = None
+
     def __init__(self):
         self.joysticks = dict()
         self._monitoring = False
@@ -30,7 +32,6 @@ class JoystickMonitor:
         self._monitoring = False
 
     def _monitor(self):
-
         while self._monitoring:
             # sleep for a little while to allow updates
             time.sleep(.0001)
@@ -38,3 +39,9 @@ class JoystickMonitor:
                 for button in stick.get_button():
                     if button.get():
                         CommandQueue.get_instance().add_command(button.get_command())
+
+    @staticmethod
+    def get_instance():
+        if JoystickMonitor.instance is None:
+            JoystickMonitor.instance = JoystickMonitor()
+        return JoystickMonitor.instance

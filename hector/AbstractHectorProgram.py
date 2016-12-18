@@ -79,6 +79,9 @@ class AbstractHectorProgram:
     def change_mode(self, mode):
         self._mode = mode
 
+    def get_mode(self):
+        return self._mode
+
     def start_command_queue(self):
         CommandQueue.get_instance().run()
 
