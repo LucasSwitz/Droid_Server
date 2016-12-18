@@ -14,16 +14,13 @@ class PWMMotorController(RPiMotorController):
             self.apply_forward(value)
 
     def apply_forward(self, throttle):
-        print("Forward!")
         self.set_pin(self.get_pins()[0], True)
         self.set_pin(self.get_pins()[1], False)
 
     def apply_backwards(self, throttle):
-        print("Backward!")
         self.set_pin(self.get_pins()[1], True)
         self.set_pin(self.get_pins()[0], False)
 
     def off(self):
-        print ("Off!")
         self.set_pin(self.get_pins()[1], False)
         self.set_pin(self.get_pins()[0], False)

@@ -2,13 +2,17 @@ from System import System
 from motorcontrollers.PWMMotorController import PWMMotorController
 from functools import partial
 from hector.HectorOI import HectorOI
-from threading import Thread
-from command.commands.DriveByJoystickCommand import DriveByJoystickCommand
-
+from hector.HectorMap import HectorMap
 
 class DriveTrain(System):
-    def get_default_command(self, args):
-        return DriveByJoystickCommand()
+    instance = None
+
+    @staticmethod
+    def get_instance():
+        if DriveTrain.instance is None:
+            DriveTrain.instance = DriveTrain([HectorMap.DRIVETRAIN_LEFT_FWD, HectorMap.DRIVETRAIN_LEFT_BKWD]
+                                  , [HectorMap.DRIVETRAIN_RIGHT_FWD, HectorMap.DRIVETRAIN_RIGHT_BKWD])
+        return DriveTrain.instance
 
     def __init__(self, left_pins, right_pins):
         System.__init__(self, "DriveTrain")

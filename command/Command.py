@@ -43,7 +43,7 @@ class Command:
         for arg in args:
             self.switches.get(arg)
 
-    def set_interruptable(self,interruptable):
+    def set_interruptable(self, interruptable):
         self._interruptable = interruptable
 
     def is_interruptable(self):
@@ -65,7 +65,7 @@ class Command:
             self.end()
 
     def uses(self, system):
-             self._used_system = system
+        self._used_system = system
 
     def acquire_system(self):
         if self._used_system is not None:

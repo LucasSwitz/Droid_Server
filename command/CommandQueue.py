@@ -12,7 +12,7 @@ class CommandQueue:
         self._q.put(command)
 
     def run(self):
-        while self._q.not_empty():
+        while self._q.qsize() > 0:
             command = self._q.get()
             if command.is_parallel():
                 self._run_parallel(command)
@@ -23,7 +23,7 @@ class CommandQueue:
         self._q.empty()
 
     def _run_parallel(self,command):
-        thread = Thread(command.run)
+        thread = Thread(target=command.run)
         thread.daemon = True
         thread.start()
 

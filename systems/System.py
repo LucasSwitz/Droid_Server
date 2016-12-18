@@ -7,8 +7,8 @@ class System:
     def __init__(self, name):
         self._locked = False
         self._name = name
-        self._default_command = self.get_default_command()
-        self._current_command = False
+        self._default_command = None
+        self._current_command = None
 
     def cli_input(self, args):
         function = self.get_cli_functions(args[1:len(args)]).get(args[0])
@@ -20,7 +20,7 @@ class System:
         function()
 
     def enable(self):
-        CommandQueue.get_instance().add_command(self._default_command)
+        self.run_default_command()
         self._enable()
 
     @abc.abstractmethod
@@ -35,11 +35,6 @@ class System:
     @abc.abstractmethod
     def stop(self):
         """stops all electrical components"""
-        return
-
-    @abc.abstractmethod
-    def get_default_command(self, args):
-        """Returns default command. None if no command"""
         return
 
     def lock(self, command):
@@ -69,7 +64,8 @@ class System:
         self._current_command = command
 
     def run_default_command(self):
-        CommandQueue.get_instance().add_command(self._default_command)
+        if self._default_command is not None:
+            CommandQueue.get_instance().add_command(self._default_command)
 
     def name(self):
         return self._name

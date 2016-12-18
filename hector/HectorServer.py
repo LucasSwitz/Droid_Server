@@ -3,6 +3,8 @@ from hector.InputChannel import InputChannel, InputMode
 from hector.HectorClient import HectorClient
 from hector.Hector import Hector
 from communication.MessageDispatch import MessageDispatch
+from hector.HectorProgram import HectorProgram
+from hector.AbstractHectorProgram import HectorMode
 
 
 class HectorServer(Server):
@@ -10,6 +12,14 @@ class HectorServer(Server):
         Server.__init__(self, port)
         MessageDispatch()
         self.inputChannel = InputChannel(input_mode)
+        self._hector_program = HectorProgram()
+        self._hector_program.change_mode(HectorMode.TELEOP)
+
+    def start(self):
+        Server.start(self)
+        while not self.has_client():
+            pass
+        self._hector_program.run()
 
     def on_data_recieve(self, data):
         if data == "close":

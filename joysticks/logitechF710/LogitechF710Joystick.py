@@ -17,4 +17,6 @@ class LogitechF710Joystick(Joystick):
         return self.get_button(Button.YL_ID).get_magnitude()
 
     def get_right_Y(self):
+        if self.get_button(Button.YR_ID).get_magnitude() is None:
+            print "NO BUTTON"
         return self.get_button(Button.YR_ID).get_magnitude()

@@ -1,4 +1,3 @@
-from command.commands.PanToPositionCommand import PanToPositionCommand
 from communication.MessageDispatch import MessageDispatch
 
 
@@ -6,7 +5,7 @@ class CommandFactory:
     @staticmethod
     def get_command(command_name, args):
         switch = {
-            "pan_to_position": PanToPositionCommand.from_args(args)
+
         }
         (command, args) = switch.get(command_name)
 

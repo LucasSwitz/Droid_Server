@@ -13,7 +13,6 @@ class Button:
     def __init__(self, id_number):
         self._id = id_number
         self._value = 0
-        pass
 
     def get_id(self):
         return self._id

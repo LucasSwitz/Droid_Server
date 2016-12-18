@@ -1,17 +1,16 @@
 from command.Command import Command
-from hector.Hector import Hector
 from hector.HectorOI import HectorOI
-
+from systems.DriveTrain import DriveTrain
 
 class DriveByJoystickCommand(Command):
     def __init__(self):
         Command.__init__(self, parallel=True)
-        self._drive_train = Hector.get_instance().drivetrain
-        self._stick = HectorOI.drive_stick
+        self._drive_train = DriveTrain.get_instance()
         self.uses(self._drive_train)
+        self._stick = HectorOI.drive_stick
 
     def init(self):
-        self._drive_train.displatch_message("Driving with joysticks...")
+        self._drive_train.dispatch_message("Driving with joysticks...")
 
     def execute(self):
         left_throttle = self._stick.get_left_Y()

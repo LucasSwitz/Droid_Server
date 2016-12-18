@@ -2,6 +2,7 @@ import socket
 import abc
 from communication.server.Client import ClientThread
 from communication.server.ClientListener import ClientListener
+from threading import Thread
 
 
 class Server(ClientListener):
@@ -17,6 +18,7 @@ class Server(ClientListener):
         self._port = port
         self._socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self._running = False
+        self._has_client = False
         self.setup()
 
     def setup(self):
@@ -24,14 +26,22 @@ class Server(ClientListener):
         self._socket.bind(('', self._port))
         self._socket.listen(Server.MAX_NUM_OF_CONNECTIONS)
 
-    def start(self):
+    def _start(self):
         print("Waiting for clients to connect...")
         self._running = True
         while self._running:
             (client_socket, address) = self._socket.accept()
 
             print("Client accepted from: " + str(address))
+            self._has_client = True
             self.add_client(client_socket)
+
+    def start(self):
+        run_thread = Thread(target=self._start)
+        run_thread.start()
+
+    def has_client(self):
+        return self._has_client
 
     def add_client(self, client_socket):
         client = ClientThread(client_socket)

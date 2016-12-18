@@ -1,5 +1,6 @@
 from hector.HectorMap import HectorMap
 from systems.DriveTrain import DriveTrain
+from command.commands.DriveByJoystickCommand import DriveByJoystickCommand
 
 
 class Hector:
@@ -11,9 +12,8 @@ class Hector:
     # turret = Turret(turret_pan_motor_pins, turret_tilt_motor_pins)
 
     # DriveTrain Config
-    drivetrain_left_motor_pins = [HectorMap.DRIVETRAIN_LEFT_FWD, HectorMap.DRIVETRAIN_LEFT_BKWD]
-    drivetrain_right_motor_pins = [HectorMap.DRIVETRAIN_RIGHT_FWD, HectorMap.DRIVETRAIN_RIGHT_BKWD]
-    drivetrain = DriveTrain(drivetrain_left_motor_pins, drivetrain_right_motor_pins)
+    drivetrain = DriveTrain.get_instance()
+    drivetrain.set_default_command(DriveByJoystickCommand())
 
     systems = {
         # turret.name(): turret,
@@ -21,11 +21,11 @@ class Hector:
     }
 
     def disable_all_systems(self):
-        for system in self.systems:
+        for system in self.systems.values():
             system.disable()
 
     def enable_all_systems(self):
-        for system in self.systems:
+        for system in self.systems.values():
             system.enable()
 
     @staticmethod

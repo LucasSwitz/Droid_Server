@@ -6,4 +6,4 @@ class LogitechF710AxisButton(AxisButton):
         AxisButton.__init__(self, id_number)
 
     def get_magnitude(self):
-        (self.get_value() - 128) / 128.0
+        return (self.get_value() - 128) / 128.0
