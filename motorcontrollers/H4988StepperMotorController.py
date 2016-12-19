@@ -48,7 +48,7 @@ class H4988StepperMotorController(RPiMotorController):
     def set_direction_pin(self, state):
         if state:
             self._current_direction = self.Direction.FORWARD
-            self.set(self._pins[0], True)
+            self.set_pin(self._pins[0], True)
         else:
             self._current_direction = self.Direction.BACKWARD
             self.set_pin(self._pins[0], False)

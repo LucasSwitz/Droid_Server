@@ -1,11 +1,20 @@
 from systems.System import System
 from functools import partial
 import threading
+from hector.HectorMap import HectorMap
 
 from motorcontrollers.H4988StepperMotorController import H4988StepperMotorController
 
 
 class Turret(System):
+    instance = None
+
+    @staticmethod
+    def get_instance():
+        if Turret.instance is None:
+            Turret.instance = Turret()
+        return Turret.instance
+
     def stop(self, args):
         self.disable()
 
@@ -23,10 +32,10 @@ class Turret(System):
 
         return functions
 
-    def __init__(self, pan_pins, tilt_pins):
+    def __init__(self, ):
         System.__init__(self, "Turret")
-        self._pan_controller = H4988StepperMotorController(pan_pins)
-        self._tilt_controller = H4988StepperMotorController(tilt_pins)
+        self._pan_controller = H4988StepperMotorController([HectorMap.PAN_DIRECTION_PIN, HectorMap.PAN_STEP_PIN])
+        self._tilt_controller = H4988StepperMotorController([HectorMap.TILT_DIRECTION_PIN, HectorMap.TILT_STEP_PIN])
 
     def disable(self):
         System.dispatch_message(self, "Disabled.")
@@ -49,18 +58,9 @@ class Turret(System):
         pan_thread.start()
         tilt_thread.start()
 
-    def tilt_angle(self):
-        pass
-        return self._tilt_controller.get_current_angle()
-
-    def pan_angle(self):
-        pass
-        return self._pan_controller.get_current_angle()
-
-    def is_at_pan_target(self):
-        pass
-        return self._pan_controller.on_target()
-
-    def is_at_tilt_target(self):
-        pass
-        return self._tilt_controller.on_target()
+    def step_pan(self,direction):
+        System.dispatch_message(self, "Stepping pan...")
+        if direction:
+            self._pan_controller.step_forward()
+        else:
+            self._pan_controller.step_backward()

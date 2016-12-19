@@ -21,5 +21,5 @@ class HectorProgram(AbstractHectorProgram):
         pass
 
     def _on_teleop_start(self):
-        pass
+        print "Started Tele"
 
