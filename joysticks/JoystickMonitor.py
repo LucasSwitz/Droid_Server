@@ -21,6 +21,8 @@ class JoystickMonitor:
             stick.get_button(Button.YL_ID).update(button_values[1])
             stick.get_button(Button.XR_ID).update(button_values[2])
             stick.get_button(Button.YR_ID).update(button_values[3])
+            stick.get_button(Button.HAT_BUTTON_ID).update(button_values[4])
+            stick.get_button(Button.A_BUTTON_ID).update(button_values[5])
 
     def start_monitor(self):
         self._monitoring = True

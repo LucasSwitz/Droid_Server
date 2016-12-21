@@ -10,6 +10,9 @@ class Button:
     YR_ID = 0x34
     ZR_ID = 0x35
 
+    HAT_BUTTON_ID = 0x39
+    A_BUTTON_ID = 11
+
     def __init__(self, id_number):
         self._id = id_number
         self._value = 0

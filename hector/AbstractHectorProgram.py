@@ -1,7 +1,7 @@
 import abc
+from hector.Hector import Hector
 from command.CommandQueue import CommandQueue
 from enum import Enum
-from hector.Hector import Hector
 
 
 class HectorMode(Enum):

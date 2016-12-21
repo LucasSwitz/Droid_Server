@@ -42,26 +42,26 @@ class H4988StepperMotorController(RPiMotorController):
     def set_direction(self, direction):
         if direction == self.Direction.FORWARD:
             self.set_direction_pin(True)
+            self._current_direction = self.Direction.FORWARD
         elif direction == self.Direction.BACKWARD:
+            self._current_direction = self.Direction.BACKWARD
             self.set_direction_pin(False)
 
     def set_direction_pin(self, state):
         if state:
-            self._current_direction = self.Direction.FORWARD
             self.set_pin(self._pins[0], True)
         else:
-            self._current_direction = self.Direction.BACKWARD
             self.set_pin(self._pins[0], False)
         # should be 50 microseconds
-        time.sleep(.0001)
+        time.sleep(.000001)
 
     def step(self):
         self.set_pin(self._pins[1], True)
         # should be 100 microseconds
-        time.sleep(.0001)
+        time.sleep(.000001)
         self.set_pin(self._pins[1], False)
         # should be 100 microseconds
-        time.sleep(.0001)
+        time.sleep(.000001)
         self._current_position += 1
 
     def _set_step_pin(self, value):

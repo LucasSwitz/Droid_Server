@@ -15,7 +15,7 @@ class Turret(System):
             Turret.instance = Turret()
         return Turret.instance
 
-    def stop(self, args):
+    def stop(self):
         self.disable()
 
     def get_cli_functions(self, args):
@@ -59,8 +59,13 @@ class Turret(System):
         tilt_thread.start()
 
     def step_pan(self,direction):
-        System.dispatch_message(self, "Stepping pan...")
         if direction:
             self._pan_controller.step_forward()
         else:
             self._pan_controller.step_backward()
+
+    def step_tilt(self,direction):
+        if direction:
+            self._tilt_controller.step_forward()
+        else:
+            self._tilt_controller.step_backward()

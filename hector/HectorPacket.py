@@ -1,5 +1,4 @@
 
-
 class HectorPacket:
 
     CLI_INPUT_MODE = 0x01
@@ -23,3 +22,4 @@ class HectorPacket:
     JOYSTICK_RIGHT_Y = 6
     JOYSTICK_RIGHT_X = 7
 
+    HAT_BUTTON = 8
