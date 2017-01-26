@@ -1,6 +1,8 @@
-from RPiMotorController import RPiMotorController
-from enum import Enum
 import time
+
+from enum import Enum
+
+from RPiMotorController import RPiMotorController
 
 
 class H4988StepperMotorController(RPiMotorController):

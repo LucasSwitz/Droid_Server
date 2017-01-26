@@ -1,7 +1,8 @@
+import time
+from threading import Thread
+
 from command.CommandQueue import CommandQueue
 from joysticks.buttons.Button import Button
-from threading import Thread
-import time
 
 
 class JoystickMonitor:

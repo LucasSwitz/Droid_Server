@@ -1,7 +1,6 @@
-from systems.Turret import Turret
 from command.Command import Command
 from hector.HectorOI import HectorOI
-import time
+from hector.systems.Turret import Turret
 
 
 class StepTurretByJoystickCommand(Command):

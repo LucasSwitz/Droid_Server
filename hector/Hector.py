@@ -1,11 +1,13 @@
-from command.commands.StepTurretByDPad import StepTurretByDPad
-from systems.Turret import Turret
-from systems.DriveTrain import DriveTrain
-from systems.Laser import Laser
-from command.commands.DriveByJoystickCommand import DriveByJoystickCommand
-from command.commands.LaserStateByButtonCommand import LaserStateByButtonCommand
+from bot.Bot import Bot
+from hector.commands.DriveByJoystickCommand import DriveByJoystickCommand
+from hector.commands.LaserStateByButtonCommand import LaserStateByButtonCommand
+from hector.commands.StepTurretByDPad import StepTurretByDPad
+from hector.systems.DriveTrain import DriveTrain
+from hector.systems.Laser import Laser
+from hector.systems.Turret import Turret
 
-class Hector:
+
+class Hector(Bot):
     instance = None
     # Turret Config
     turret = Turret.get_instance()
@@ -18,19 +20,9 @@ class Hector:
     laser = Laser.get_instance()
     laser.set_default_command(LaserStateByButtonCommand())
 
-    systems = {
-        turret.name(): turret,
-        drivetrain.name(): drivetrain,
-        laser.name(): laser
-    }
-
-    def disable_all_systems(self):
-        for system in self.systems.values():
-            system.stop()
-
-    def enable_all_systems(self):
-        for system in self.systems.values():
-            system.enable()
+    Bot.systems[turret.name()] = turret
+    Bot.systems[drivetrain.name()] = drivetrain
+    Bot.systems[laser.name()] = laser
 
     @staticmethod
     def get_instance():
@@ -38,11 +30,5 @@ class Hector:
             Hector.instance = Hector()
         return Hector.instance
 
-    def is_alive(self):
-        return self._alive
-
-    def kill(self):
-        self._alive = False
-
     def __init__(self):
-        self._alive = True
+        Bot.__init__(self)

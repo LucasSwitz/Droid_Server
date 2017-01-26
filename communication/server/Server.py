@@ -1,12 +1,12 @@
-import socket
 import abc
+import socket
+from threading import Thread
+
 from communication.server.Client import ClientThread
 from communication.server.ClientListener import ClientListener
-from threading import Thread
 
 
 class Server(ClientListener):
-
     @abc.abstractmethod
     def on_data_recieve(self, data):
         """Do something with client data"""

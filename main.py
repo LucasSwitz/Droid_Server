@@ -1,4 +1,5 @@
-from hector.HectorServer import HectorServer
+from bot.BotServer import BotServer
+from hector.Hector import Hector
 
-server = HectorServer(4444)
+server = BotServer(4444, Hector.get_instance())
 server.start()

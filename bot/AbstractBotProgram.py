@@ -1,33 +1,36 @@
 import abc
-from hector.Hector import Hector
-from command.CommandQueue import CommandQueue
+
 from enum import Enum
 
+from bot.Bot import Bot
+from command.CommandQueue import CommandQueue
 
-class HectorMode(Enum):
+
+class BotMode(Enum):
     DISABLED = 0
     TELEOP = 1
     AUTONOMOUS = 2
 
 
-class AbstractHectorProgram:
-    def __init__(self):
+class AbstractBotProgram:
+    def __init__(self, bot):
         self._last_mode = None
-        self.change_mode(HectorMode.DISABLED)
+        self.change_mode(BotMode.DISABLED)
+        self._bot = bot
 
     def on_teleop_start(self):
         CommandQueue.get_instance().clear()
-        Hector.get_instance().enable_all_systems()
+        self._bot.enable_all_systems()
         self._on_teleop_start()
 
     def on_auto_start(self):
         CommandQueue.get_instance().clear()
-        Hector.get_instance().enable_all_systems()
+        self._bot.enable_all_systems()
         self._on_auto_start()
 
     def on_disabled_start(self):
         CommandQueue.get_instance().clear()
-        Hector.get_instance().disable_all_systems()
+        self._bot.disable_all_systems()
         self._on_disabled_start()
 
     @abc.abstractmethod
@@ -61,17 +64,17 @@ class AbstractHectorProgram:
         return
 
     def run(self):
-        while Hector.get_instance().is_alive():
-            if self._mode == HectorMode.DISABLED:
-                if self._last_mode != HectorMode.DISABLED:
+        while self._bot.is_alive():
+            if self._mode == BotMode.DISABLED:
+                if self._last_mode != BotMode.DISABLED:
                     self.on_disabled_start()
                 self.disabled()
-            elif self._mode == HectorMode.TELEOP:
-                if self._last_mode != HectorMode.TELEOP:
+            elif self._mode == BotMode.TELEOP:
+                if self._last_mode != BotMode.TELEOP:
                     self.on_teleop_start()
                 self.teleop()
-            elif self._mode == HectorMode.AUTONOMOUS:
-                if self._last_mode != HectorMode.AUTONOMOUS:
+            elif self._mode == BotMode.AUTONOMOUS:
+                if self._last_mode != BotMode.AUTONOMOUS:
                     self.on_auto_start()
                 self.auto()
             self._last_mode = self._mode

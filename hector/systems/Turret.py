@@ -1,8 +1,8 @@
-from systems.System import System
-from functools import partial
 import threading
-from hector.HectorMap import HectorMap
+from functools import partial
 
+from hector.HectorMap import HectorMap
+from hector.systems.System import System
 from motorcontrollers.H4988StepperMotorController import H4988StepperMotorController
 
 
@@ -17,6 +17,9 @@ class Turret(System):
 
     def stop(self):
         self.disable()
+
+    def _enable(self):
+        pass
 
     def get_cli_functions(self, args):
         functions = {
@@ -58,13 +61,13 @@ class Turret(System):
         pan_thread.start()
         tilt_thread.start()
 
-    def step_pan(self,direction):
+    def step_pan(self, direction):
         if direction:
             self._pan_controller.step_forward()
         else:
             self._pan_controller.step_backward()
 
-    def step_tilt(self,direction):
+    def step_tilt(self, direction):
         if direction:
             self._tilt_controller.step_forward()
         else:

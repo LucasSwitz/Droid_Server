@@ -1,5 +1,5 @@
-from hector.input.CLInterpreter import CLInterpreter
-from hector.input.InputState import InputState
+from bot.input.CLInterpreter import CLInterpreter
+from bot.input.InputState import InputState
 
 
 class CLIInputState(InputState):

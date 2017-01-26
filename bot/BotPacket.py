@@ -1,6 +1,4 @@
-
-class HectorPacket:
-
+class BotPacket:
     CLI_INPUT_MODE = 0x01
     TELEOP_INPUT_MODE = 0x02
 

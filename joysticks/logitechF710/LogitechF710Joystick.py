@@ -1,7 +1,7 @@
-from joysticks.buttons.Button import Button
 from joysticks.Joystick import Joystick
-from joysticks.logitechF710.LogitechF710HatButton import LogitechF710HatButton
+from joysticks.buttons.Button import Button
 from joysticks.logitechF710.LogitechF710AxisButton import LogitechF710AxisButton
+from joysticks.logitechF710.LogitechF710HatButton import LogitechF710HatButton
 
 
 class LogitechF710Joystick(Joystick):

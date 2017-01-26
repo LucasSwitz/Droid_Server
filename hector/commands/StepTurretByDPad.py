@@ -1,11 +1,12 @@
 from command.Command import Command
-from systems.Turret import Turret
 from hector.HectorOI import HectorOI
+from hector.systems.Turret import Turret
 
 
 class StepTurretByDPad(Command):
     def init(self):
         pass
+
     def execute(self):
         hat_angle = self._stick.get_hat_button_angle()
         if hat_angle == 135:

@@ -1,6 +1,6 @@
-from systems.System import System
 from digital_out.DigitalOut import RpiDigitalOut
 from hector.HectorMap import HectorMap
+from hector.systems.System import System
 
 
 class Laser(System):
@@ -35,6 +35,7 @@ class Laser(System):
 
     def is_on(self):
         return self._on
+
     @staticmethod
     def get_instance():
         if Laser.instance is None:

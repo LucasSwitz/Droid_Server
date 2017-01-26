@@ -2,8 +2,8 @@
 <project version="4">
   <component name="WebServers">
     <option name="servers">
-      <webServer id="7fb8d80f-bfbd-4351-b80e-0ff64bc939b8" name="pi deploy" url="http://192.168.1.106">
-        <fileTransfer host="192.168.1.106" port="21" rootFolder="/home/pi">
+      <webServer id="7fb8d80f-bfbd-4351-b80e-0ff64bc939b8" name="pi deploy" url="http://192.168.0.100">
+        <fileTransfer host="192.168.0.100" port="21" rootFolder="/home/pi">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" />
           </advancedOptions>

@@ -1,8 +1,11 @@
-from System import System
-from motorcontrollers.PWMMotorController import PWMMotorController
 from functools import partial
-from hector.HectorOI import HectorOI
+
 from hector.HectorMap import HectorMap
+
+from System import System
+from hector.HectorOI import HectorOI
+from motorcontrollers.PWMMotorController import PWMMotorController
+
 
 class DriveTrain(System):
     instance = None
@@ -11,7 +14,7 @@ class DriveTrain(System):
     def get_instance():
         if DriveTrain.instance is None:
             DriveTrain.instance = DriveTrain([HectorMap.DRIVETRAIN_LEFT_FWD, HectorMap.DRIVETRAIN_LEFT_BKWD]
-                                  , [HectorMap.DRIVETRAIN_RIGHT_FWD, HectorMap.DRIVETRAIN_RIGHT_BKWD])
+                                             , [HectorMap.DRIVETRAIN_RIGHT_FWD, HectorMap.DRIVETRAIN_RIGHT_BKWD])
         return DriveTrain.instance
 
     def __init__(self, left_pins, right_pins):

@@ -1,4 +1,5 @@
 import abc
+
 import RPi.GPIO as GPIO
 
 GPIO.setmode(GPIO.BCM)
@@ -17,8 +18,8 @@ class RPiMotorController:
     def get_pins(self):
         return self._pins
 
-    def set_pin(self,pin,value):
-        GPIO.output(pin,value)
+    def set_pin(self, pin, value):
+        GPIO.output(pin, value)
 
     @abc.abstractmethod
     def set(self, value):

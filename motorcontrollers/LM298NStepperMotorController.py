@@ -1,5 +1,6 @@
-from motorcontrollers.RPiMotorController import RPiMotorController
 import time
+
+from motorcontrollers.RPiMotorController import RPiMotorController
 
 
 # Using the LM298N driver

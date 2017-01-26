@@ -22,11 +22,10 @@ class CommandQueue:
     def clear(self):
         self._q.empty()
 
-    def _run_parallel(self,command):
+    def _run_parallel(self, command):
         thread = Thread(target=command.run)
         thread.daemon = True
         thread.start()
-
 
     @staticmethod
     def get_instance():

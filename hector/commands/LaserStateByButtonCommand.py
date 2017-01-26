@@ -1,6 +1,6 @@
 from command.Command import Command
-from systems.Laser import Laser
 from hector.HectorOI import HectorOI
+from hector.systems.Laser import Laser
 
 
 class LaserStateByButtonCommand(Command):
@@ -11,7 +11,7 @@ class LaserStateByButtonCommand(Command):
         self._stick = HectorOI.drive_stick
 
     def init(self):
-        Command.__init__(self,parallel=True)
+        Command.__init__(self, parallel=True)
 
     def execute(self):
 
@@ -29,4 +29,4 @@ class LaserStateByButtonCommand(Command):
         pass
 
     def finished(self):
-        False
+        return True

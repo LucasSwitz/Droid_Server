@@ -1,6 +1,6 @@
+from bot.Bot import Bot
 from command.CommandFactory import CommandFactory
 from communication.MessageDispatch import MessageDispatch
-from hector.Hector import Hector
 
 
 class CLInterpreter:
@@ -23,7 +23,7 @@ class CLInterpreter:
             MessageDispatch.instance.dispatch("Invalid use of 'execute' ")
             return
 
-        system = Hector.systems.get(args[0], None)
+        system = Bot.systems.get(args[0], None)
 
         if system is not None:
             system.cli_input(args[1:len(args)])

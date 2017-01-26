@@ -21,10 +21,10 @@ class MessageDispatch:
     def __getattr__(self, name):
         return getattr(self.instance, name)
 
-    def add_listener(self,listener):
+    def add_listener(self, listener):
         self.instance.add_listener(listener)
 
-    def dispatch(self,message):
+    def dispatch(self, message):
         self.instance.dispatch(message)
 
     class __MessageDispatch:
@@ -38,5 +38,3 @@ class MessageDispatch:
         def dispatch(self, message):
             for listener in self._listeners:
                 listener.handle(message)
-
-

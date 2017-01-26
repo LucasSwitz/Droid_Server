@@ -6,6 +6,6 @@ class InputState:
         pass
 
     @abc.abstractmethod
-    def parse(self,data):
+    def parse(self, data):
         """Parsing incoming packets"""
         pass

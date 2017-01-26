@@ -1,6 +1,7 @@
-from communication.MessageDispatch import MessageDispatch
-from command.CommandQueue import CommandQueue
 import abc
+
+from command.CommandQueue import CommandQueue
+from communication.MessageDispatch import MessageDispatch
 
 
 class System:
@@ -60,7 +61,7 @@ class System:
     def set_default_command(self, command):
         self._default_command = command
 
-    def set_current_command(self,command):
+    def set_current_command(self, command):
         self._current_command = command
 
     def run_default_command(self):

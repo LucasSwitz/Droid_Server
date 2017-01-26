@@ -1,6 +1,6 @@
 from command.Command import Command
 from hector.HectorOI import HectorOI
-from systems.DriveTrain import DriveTrain
+from hector.systems.DriveTrain import DriveTrain
 
 
 class DriveByJoystickCommand(Command):
@@ -16,6 +16,7 @@ class DriveByJoystickCommand(Command):
     def execute(self):
         left_throttle = self._stick.get_left_Y()
         right_throttle = self._stick.get_right_Y()
+
         self._drive_train.set(left_throttle, right_throttle)
 
     def _interrupted(self):
